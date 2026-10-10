@@ -1,0 +1,61 @@
+---
+import { GENERAL_INFO } from '../data/site';
+---
+
+<footer id="contact" class="footer">
+  <div class="container">
+    <p class="lead">Have a project in mind?</p>
+    <a class="email" href={`mailto:${GENERAL_INFO.email}`}>{GENERAL_INFO.email}</a>
+    <div class="credit">
+      {
+        GENERAL_INFO.repoUrl ? (
+          <a href={GENERAL_INFO.repoUrl} target="_blank" rel="noopener">
+            Built by {GENERAL_INFO.name}
+          </a>
+        ) : (
+          <span>Built by {GENERAL_INFO.name}</span>
+        )
+      }
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  .lead {
+    font-size: 18px;
+  }
+  .email {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font: 400 clamp(20px, 8.75vw, 30px) / 40px var(--font-anton); /* 28px at 320: the address is one unbreakable word */
+    overflow-wrap: anywhere;
+  }
+  .email:hover {
+    text-decoration: underline;
+  }
+  .credit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+    color: var(--muted-fg);
+  }
+  .credit a {
+    padding-block: 8px; /* 16px text alone is too small a touch target */
+  }
+  .credit a:hover {
+    text-decoration: underline;
+    color: var(--fg);
+  }
+  @media (min-width: 640px) {
+    .email {
+      font-size: 36px;
+    }
+  }
+</style>
