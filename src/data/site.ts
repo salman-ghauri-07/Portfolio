@@ -7,7 +7,7 @@ export const GENERAL_INFO = {
   email: "hello.salman@gmail.com",
   ctaUrl: "mailto:hello.salman@gmail.com", // "Let's Talk" target (Upwork, Calendly, mailto…)
   repoUrl: "", // optional: public GitHub repo of THIS site, links the "Built by" credit
-  siteUrl: "https://salman.me",
+  siteUrl: "https://salmanghauri.me",
 };
 
 export const SOCIAL_LINKS = [
