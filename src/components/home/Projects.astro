@@ -10,7 +10,7 @@ import SectionTitle from '../SectionTitle.astro';
     <div class="projects">
       <!-- desktop: one stacked image per project, the one matching data-active is shown -->
       <div class="float" data-active="" aria-hidden="true">
-        {PROJECTS.map((p) => <Image src={p.thumbnail} alt="" width={400} height={500} loading="lazy" data-slug={p.slug} />)}
+        {PROJECTS.map((p) => <Image src={p.thumbnail} alt="" width={960} height={720} loading="lazy" data-slug={p.slug} />)}
       </div>
 
       <div class="list">
@@ -59,7 +59,7 @@ import SectionTitle from '../SectionTitle.astro';
     position: relative;
   }
 
-  /* floating 3:4 thumbnail, desktop only */
+  /* floating 4:3 thumbnail, desktop only */
   .float {
     display: none;
     position: absolute;
@@ -67,8 +67,8 @@ import SectionTitle from '../SectionTitle.astro';
     top: 0;
     z-index: 1;
     pointer-events: none;
-    width: 200px;
-    aspect-ratio: 3 / 4;
+    width: 280px;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     opacity: 0;
   }
@@ -192,7 +192,7 @@ import SectionTitle from '../SectionTitle.astro';
   }
   @media (min-width: 1280px) {
     .float {
-      width: 350px;
+      width: 467px;
     }
   }
 </style>

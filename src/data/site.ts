@@ -1,11 +1,12 @@
 import type { ImageMetadata } from "astro";
 import dp from "../assets/dp.jpg";
+import glaidoThumb from "../assets/projects/thumbnail/glaido.png";
 
 export const GENERAL_INFO = {
   name: "Muhammad Salman",
   preloaderName: "SALMAN", // uppercase, 4–10 letters, shown letter by letter in the preloader
-  email: "hello.salman@gmail.com",
-  ctaUrl: "mailto:hello.salman@gmail.com", // "Let's Talk" target (Upwork, Calendly, mailto…)
+  email: "hello.salmanghauri@gmail.com",
+  ctaUrl: "mailto:hello.salmanghauri@gmail.com", // "Let's Talk" target (Upwork, Calendly, mailto…)
   repoUrl: "", // optional: public GitHub repo of THIS site, links the "Built by" credit
   siteUrl: "https://salmanghauri.me",
 };
@@ -42,7 +43,7 @@ export const HERO = {
 
 export const ABOUT = {
   statement:
-    "I believe in a user centered design approach, ensuring that every project I work on is tailored to meet the specific needs of its users.", // TODO, 2–4 lines at 60px
+    "I believe in a user centered design approach, ensuring that every project I work on is tailored to meet the specific needs of its users.", 
   label: "This is me.",
   greeting: "Hi, I'm {name}.",
   paragraphs: ["TODO paragraph 1", "TODO paragraph 2"],
@@ -113,7 +114,7 @@ export const MY_EXPERIENCE = [
 ];
 
 export const MY_EDUCATION = [
-  // newest first
+
   {
     degree: "BS Computer Science",
     school: "University Of Okara",
@@ -162,7 +163,7 @@ export const PROJECTS: Project[] = [
     role:
       "Built the Electron.js desktop app end to end, engineered the audio pipeline, and designed the Node.js / Express.js backend with Supabase for auth and data.",
     techStack: ["Electron.js", "Node.js", "Supabase", "Express.js", "WebSockets", "OpenAI Whisper", "SpeexDSP"],
-    thumbnail: dp,
+    thumbnail: glaidoThumb,
     images: [],
     liveUrl: "https://glaido.com/",
   },
