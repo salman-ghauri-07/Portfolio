@@ -25,14 +25,20 @@
 </style>
 
 <script>
-  import { gsap, mm } from '../lib/motion';
+  import { mm } from '../lib/motion';
 
   // Kept quirk: no -50% offset, the SVG's top-left corner sits at the pointer. No hover scaling.
   mm.add('(prefers-reduced-motion: no-preference) and (pointer: fine) and (min-width: 768px)', () => {
+    // No tween: this is the only visible pointer (system cursor is hidden), so any trail reads as lag.
     const cursor = document.getElementById('cursor')!;
-    const move = (e: MouseEvent) =>
-      gsap.to(cursor, { x: e.clientX, y: e.clientY, ease: 'power2.out', duration: 0.25, opacity: 1 });
+    const move = (e: MouseEvent) => {
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      cursor.style.opacity = '1';
+    };
     addEventListener('mousemove', move);
-    return () => removeEventListener('mousemove', move);
+    return () => {
+      removeEventListener('mousemove', move);
+      cursor.style.opacity = '';
+    };
   });
 </script>

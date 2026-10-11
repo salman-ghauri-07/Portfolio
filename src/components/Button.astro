@@ -27,7 +27,10 @@ const Tag = href ? 'a' : 'button';
     letter-spacing: 0.1em;
     background: var(--primary);
     color: var(--primary-fg);
-    transition: color 0.15s;
+    transition: transform 160ms var(--ease-out);
+  }
+  .btn:active {
+    transform: scale(0.97);
   }
   .btn-label {
     position: relative;
@@ -38,14 +41,17 @@ const Tag = href ? 'a' : 'button';
     position: absolute;
     left: 0;
     right: 0;
-    top: 200%;
+    top: 0;
     height: 100%;
     background: #fff;
     border-radius: 50%;
-    transform: scale(1.5);
-    transition: top 0.5s;
+    transform: translateY(200%) scale(1.5); /* translate % is the fill's own height = the button's */
+    transition: transform 300ms var(--ease-out);
   }
-  .btn:hover .btn-fill {
-    top: 0;
+  /* gated: touch fires a sticky :hover on tap, which left the button white */
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover .btn-fill {
+      transform: translateY(0) scale(1.5);
+    }
   }
 </style>

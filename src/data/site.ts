@@ -25,9 +25,9 @@ export const MENU_LINKS = [
   { name: "Home", url: "/" },
   { name: "About Me", url: "/#about-me" },
   { name: "Experience", url: "/#my-experience" },
-  { name: "Education", url: "/#education" },
   { name: "Projects", url: "/#selected-projects" },
   { name: "Hackathons", url: "/#hackathons" },
+  { name: "Education", url: "/#education" },
 ];
 
 export const HERO = {
@@ -186,6 +186,7 @@ export const PROJECTS: Project[] = [
     techStack: ["Electron.js", "React", "TypeScript", "Redux Toolkit", "React Query", "Ant Design", "Lexical", "pdf-lib"],
     thumbnail: lucyThumb,
     images: [],
+    liveUrl: "https://www.medlucy.com/"
   },
   {
     title: "Glaido",

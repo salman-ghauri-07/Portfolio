@@ -26,8 +26,9 @@
         p.style.strokeDasharray = `${len}`;
         p.style.strokeDashoffset = `${len}`;
       });
+      // Loop only while on screen. Trigger is the static wrapper: the svg itself moves (y: 300) mid-loop.
       gsap
-        .timeline({ repeat: -1 })
+        .timeline({ repeat: -1, scrollTrigger: { trigger: svg.parentElement, toggleActions: 'play pause resume pause' } })
         .to(svg, { autoAlpha: 1, duration: 0.1 })
         .to(paths, { strokeDashoffset: 0, duration: 2, delay: 1 })
         .to(svg, { fill: '#F0ECE608', duration: 0.5, delay: 0.5 }) // same value as --chevron-fill; GSAP needs the literal

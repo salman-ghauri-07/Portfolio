@@ -79,10 +79,12 @@ import SectionTitle from '../SectionTitle.astro';
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    transition: opacity 0.5s;
+    filter: blur(2px); /* masks the double exposure while two thumbnails crossfade */
+    transition: opacity 250ms ease, filter 250ms ease;
   }
   .float :global(img.is-active) {
     opacity: 1;
+    filter: blur(0);
   }
 
   .list {
@@ -93,7 +95,7 @@ import SectionTitle from '../SectionTitle.astro';
   .project-item {
     display: block;
     line-height: 1;
-    transition: all 0.15s;
+    transition: opacity 150ms ease;
   }
   .mobile-thumb :global(img) {
     width: 100%;
@@ -123,7 +125,7 @@ import SectionTitle from '../SectionTitle.astro';
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    transition: background-position 0.7s;
+    transition: background-position 200ms ease; /* leaving snaps back so scanning the list leaves no trail */
   }
   .icon {
     color: var(--fg);
@@ -185,6 +187,7 @@ import SectionTitle from '../SectionTitle.astro';
     }
     .project-item:hover .title {
       background-position: left;
+      transition: background-position 500ms var(--ease-out);
     }
     .project-item:hover .icon {
       opacity: 1;
@@ -256,16 +259,20 @@ import SectionTitle from '../SectionTitle.astro';
         );
       }
 
-      window.addEventListener(
-        'mousemove',
+      // quickTo retargets one tween instead of stacking a new one per mousemove. .float is pointer-events:none,
+      // so enter/leave on .projects match the old bounding-rect check.
+      const floatY = gsap.quickTo(float, 'y', { duration: 1, ease: 'power1.out' });
+      const follow = (e: MouseEvent) => floatY(e.clientY - projects.getBoundingClientRect().top - float.offsetHeight / 2);
+      projects.addEventListener(
+        'mouseenter',
         (e) => {
-          const rect = projects.getBoundingClientRect();
-          const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
-          if (!inside) gsap.to(float, { opacity: 0, duration: 0.3 });
-          else gsap.to(float, { y: e.clientY - rect.top - float.offsetHeight / 2, opacity: 1, duration: 1 });
+          follow(e);
+          gsap.to(float, { opacity: 1, duration: 1, overwrite: 'auto' });
         },
         { signal },
       );
+      projects.addEventListener('mousemove', follow, { signal });
+      projects.addEventListener('mouseleave', () => gsap.to(float, { opacity: 0, duration: 0.3, overwrite: 'auto' }), { signal });
 
       return () => ac.abort();
     });

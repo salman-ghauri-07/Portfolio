@@ -106,16 +106,18 @@ const images = await Promise.all(project.images.map((img) => getImage({ src: img
     gap: 8px;
     align-items: center;
     height: 48px;
-    transition: all 0.3s;
+    transition: color 0.3s;
   }
   .back svg {
     transition: transform 0.3s;
   }
-  .back:hover {
-    color: var(--primary);
-  }
-  .back:hover svg {
-    transform: translateX(-4px);
+  @media (hover: hover) and (pointer: fine) {
+    .back:hover {
+      color: var(--primary);
+    }
+    .back:hover svg {
+      transform: translateX(-4px);
+    }
   }
 
   #info {
@@ -211,7 +213,7 @@ const images = await Promise.all(project.images.map((img) => getImage({ src: img
     background: hsl(0 0% 13% / 0.7);
     color: var(--fg);
     opacity: 0;
-    transition: all 0.3s;
+    transition: opacity 0.3s, background-color 0.3s, color 0.3s;
   }
   .shot:hover .open,
   .open:focus-visible {

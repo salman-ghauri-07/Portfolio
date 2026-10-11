@@ -89,11 +89,14 @@ import { GENERAL_INFO, MENU_LINKS, SOCIAL_LINKS } from '../data/site';
   .bar-bottom {
     transform: translate(-50%, 5px);
   }
-  .burger:hover .bar-top {
-    transform: translate(-50%, -5px) rotate(12deg);
-  }
-  .burger:hover .bar-bottom {
-    transform: translate(-50%, 5px) rotate(-12deg);
+  /* gated: touch fires a sticky :hover on tap, which left the bars tilted after closing */
+  @media (hover: hover) and (pointer: fine) {
+    .burger:hover .bar-top {
+      transform: translate(-50%, -5px) rotate(12deg);
+    }
+    .burger:hover .bar-bottom {
+      transform: translate(-50%, 5px) rotate(-12deg);
+    }
   }
   .burger[aria-expanded='true'] .bar-top {
     transform: translate(-50%, -50%) rotate(45deg);
@@ -127,7 +130,7 @@ import { GENERAL_INFO, MENU_LINKS, SOCIAL_LINKS } from '../data/site';
     width: 500px;
     max-width: calc(100vw - 3rem);
     transform: translateX(100%);
-    transition: transform 0.7s;
+    transition: transform 300ms var(--ease-drawer); /* closing snaps; opening timing is on .is-open */
     overflow: hidden; /* clips the circle; the scrolling lives on .drawer-scroll because the scaled bg would inflate this scroll area by 25% */
   }
   .drawer-scroll {
@@ -140,6 +143,7 @@ import { GENERAL_INFO, MENU_LINKS, SOCIAL_LINKS } from '../data/site';
   }
   .drawer.is-open {
     transform: translateX(0);
+    transition-duration: 400ms;
   }
   /* grey panel enters as a huge circle whose curved left edge sweeps in slightly after the panel */
   .drawer-bg {
@@ -149,10 +153,31 @@ import { GENERAL_INFO, MENU_LINKS, SOCIAL_LINKS } from '../data/site';
     border-radius: 50%;
     background: var(--bg-light);
     transform: scale(1.5) translateX(50%);
-    transition: transform 0.7s 0.15s;
+    transition: transform 300ms var(--ease-drawer);
   }
   .drawer.is-open .drawer-bg {
     transform: scale(1.5) translateX(0);
+    transition: transform 400ms var(--ease-drawer) 80ms;
+  }
+  /* Reduced motion: fade in place instead of sliding. translateX(0), not none: the drawer's transform
+     is what keeps .drawer-bg's position:fixed scoped to the drawer instead of the whole viewport. */
+  @media (prefers-reduced-motion: reduce) {
+    .drawer {
+      transform: translateX(0);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 200ms ease, visibility 200ms;
+    }
+    .drawer.is-open {
+      opacity: 1;
+      visibility: visible;
+      transition-duration: 200ms;
+    }
+    .drawer-bg,
+    .drawer.is-open .drawer-bg {
+      transform: scale(1.5) translateX(0);
+      transition: none;
+    }
   }
 
   .drawer-content,
@@ -212,20 +237,24 @@ import { GENERAL_INFO, MENU_LINKS, SOCIAL_LINKS } from '../data/site';
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.15s;
+    transition: transform 150ms var(--ease-out);
   }
   .dot svg {
     width: 8px;
     height: 8px;
     color: var(--bg);
-    transform: scale(0);
-    transition: transform 0.15s;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: transform 150ms var(--ease-out), opacity 150ms var(--ease-out);
   }
-  .menu a:hover .dot {
-    transform: scale(2);
-  }
-  .menu a:hover .dot svg {
-    transform: scale(1);
+  @media (hover: hover) and (pointer: fine) {
+    .menu a:hover .dot {
+      transform: scale(2);
+    }
+    .menu a:hover .dot svg {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   @media (min-width: 640px) {

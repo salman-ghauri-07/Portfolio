@@ -52,8 +52,11 @@ import { GENERAL_INFO } from '../data/site';
     seen = !!sessionStorage.getItem('preloaded');
     sessionStorage.setItem('preloaded', '1');
   } catch {}
+  // A refresh replays it too; only in-site navigation (curtain handles that) skips it.
+  const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  const reload = nav?.type === 'reload';
 
-  if (reduce || seen) {
+  if (reduce || (seen && !reload)) {
     preloader.remove();
   } else {
     gsap
