@@ -1,12 +1,15 @@
 import type { ImageMetadata } from "astro";
 import dp from "../assets/dp.jpg";
+import hackathonPic from "../assets/hackathon-pic.jpg";
 import glaidoThumb from "../assets/projects/thumbnail/glaido.png";
+import researchZoneThumb from "../assets/projects/thumbnail/research-zone.png";
+import lucyThumb from "../assets/projects/thumbnail/lucy.png";
 
 export const GENERAL_INFO = {
   name: "Muhammad Salman",
   preloaderName: "SALMAN", // uppercase, 4–10 letters, shown letter by letter in the preloader
   email: "hello.salmanghauri@gmail.com",
-  ctaUrl: "mailto:hello.salmanghauri@gmail.com", // "Let's Talk" target (Upwork, Calendly, mailto…)
+  ctaUrl: "https://wa.me/923247432629?text=Hi%20Salman%2C%20I%20saw%20your%20portfolio", // "Let's Talk" target (Upwork, Calendly, mailto…)
   repoUrl: "", // optional: public GitHub repo of THIS site, links the "Built by" credit
   siteUrl: "https://salmanghauri.me",
 };
@@ -18,12 +21,13 @@ export const SOCIAL_LINKS = [
 ];
 
 export const MENU_LINKS = [
-  // dot colours --dot-1..5 map by index
+  // dot colours --dot-1..6 map by index
   { name: "Home", url: "/" },
   { name: "About Me", url: "/#about-me" },
   { name: "Experience", url: "/#my-experience" },
   { name: "Education", url: "/#education" },
   { name: "Projects", url: "/#selected-projects" },
+  { name: "Hackathons", url: "/#hackathons" },
 ];
 
 export const HERO = {
@@ -43,10 +47,13 @@ export const HERO = {
 
 export const ABOUT = {
   statement:
-    "I believe in a user centered design approach, ensuring that every project I work on is tailored to meet the specific needs of its users.", 
+    "I start with the business problem, then build software that solves it and keeps working as the number of users grows.",
   label: "This is me.",
   greeting: "Hi, I'm {name}.",
-  paragraphs: ["TODO paragraph 1", "TODO paragraph 2"],
+  paragraphs: [
+    "I build web apps with the MERN stack and desktop apps with Electron.js. Lately I've been adding AI to them, using LangChain and RAG so an app can answer questions from your own data. For deployment I use Docker, AWS EC2 and Supabase. Underneath all of it is a solid grip on CS fundamentals and algorithms, so the code I write runs fast and stays easy to change.",
+    "I've shipped products used by real customers, so I care about the boring parts too: clear code, error handling, and apps that don't break at 2am.",
+  ],
 };
 
 // object key = category label, rendered uppercase
@@ -57,8 +64,6 @@ export const MY_STACK: Record<string, { name: string; icon: string }[]> = {
     { name: "C++", icon: "/logo/cpp.svg" },
   ],
   frontend: [
-    { name: "JavaScript", icon: "/logo/javascript.svg" },
-    { name: "Typescript", icon: "/logo/typescript.svg" },
     { name: "Electron.JS", icon: "/logo/electron.svg" },
     { name: "React.JS", icon: "/logo/react.svg" },
     { name: "Next.JS", icon: "/logo/nextjs.png" },
@@ -103,13 +108,15 @@ export const MY_EXPERIENCE = [
     title: "Full Stack Developer",
     company: "Nasmak Labs",
     duration: "April 2026 - Present",
-    summary: "TODO optional one or two lines on what you owned there",
+    summary:
+      "Building an offline-first Electron.js desktop app for a clinic management system in Luxembourg, and the CNS (national health fund) integration that sends patient and billing data securely and within local healthcare rules.",
   },
    {
     title: "Full Stack Developer",
     company: "InvexTech",
     duration: "June 2025 - April 2026",
-    summary: "TODO optional one or two lines on what you owned there",
+    summary:
+      "Built and shipped web apps with Next.js, Node.js and Express, plus an Electron.js desktop app with real-time features over WebSockets. Handled deployment on Vercel, AWS and Docker, and wired in Supabase, Polar and Dub.",
   },
 ];
 
@@ -138,6 +145,20 @@ export const MY_EDUCATION = [
   },
 ];
 
+export const HACKATHONS = [
+  // newest first
+  {
+    event: "SOFTEC'26",
+    track: "Web Development · 24 hours",
+    project: "FairGig",
+    summary:
+      "A platform for gig workers to track earnings across apps and prove their income. I built the FastAPI service that flags unusual deductions and sudden pay drops, the screenshot verification and income certificate flow, and a Node.js service that groups worker complaints while keeping them anonymous.",
+    techStack: ["Next.Js", "Node.js", "FastAPI"],
+    photo: hackathonPic, // TODO: swap for the hackathon photo in src/assets/hackathons/
+    sourceCode: "https://github.com/MZeeCoder/fairgig",
+  },
+];
+
 export interface Project {
   title: string;
   slug: string;
@@ -154,6 +175,18 @@ export interface Project {
 // TODO: swap `dp` for real thumbnails/screens once they land in src/assets/projects/{thumbnail,images}
 export const PROJECTS: Project[] = [
   // 4–8 entries, list order = display order
+  {
+    title: "Lucy",
+    slug: "lucy",
+    year: 2026,
+    description:
+      "Desktop clinic management system for medical practices in Luxembourg. Doctors and secretaries run their whole day in it: appointments, patient records, prescriptions, billing and forms.<br/><br/><ul><li>CNS (national health fund) integration that builds and sends invoices to the official spec, handles act codes and suffix pricing, and shows the fund's accept or reject response.</li><li>Offline-first: edits are queued locally and retried until the server accepts them, so a dropped connection never loses a patient note.</li><li>Patient history with drag-to-arrange boxes, rich-text notes that autosave, and templates you insert with a slash command.</li><li>Prescriptions with drug lookup, auto-filled PDF forms, and print layouts measured in millimetres so they line up on real paper.</li><li>Role-based access for doctors and secretaries, real-time chat, and French and English UI.</li></ul>",
+    role:
+      "Worked on the Electron.js / React app: the CNS billing integration, offline sync, the patient history screen and the print pipeline.",
+    techStack: ["Electron.js", "React", "TypeScript", "Redux Toolkit", "React Query", "Ant Design", "Lexical", "pdf-lib"],
+    thumbnail: lucyThumb,
+    images: [],
+  },
   {
     title: "Glaido",
     slug: "glaido",
@@ -176,21 +209,8 @@ export const PROJECTS: Project[] = [
     role:
       "Full-stack: Next.js frontend, Node.js API with Socket.IO and MongoDB, FastAPI RAG service, and the AWS deployment.",
     techStack: ["Next.js", "Node.js", "FastAPI", "Socket.IO", "MongoDB", "ARQ", "AWS", "Docker", "Hugging Face Spaces"],
-    thumbnail: dp,
+    thumbnail: researchZoneThumb,
     images: [],
     liveUrl: "https://research-zone-frontend.vercel.app",
-  },
-  {
-    title: "FairGig",
-    slug: "fairgig",
-    year: 2025, // TODO confirm hackathon year
-    description:
-      "Gig worker income and rights platform, built in a 24-hour hackathon. Tracks earnings across multiple gig platforms with role-based dashboards for workers, verifiers and analysts.<br/><br/><ul><li>Statistical anomaly detection service (FastAPI) that flags unusual deductions, sudden income drops and commission discrepancies.</li><li>Secure screenshot verification flow and a print-friendly certificate engine that renders verified income reports for banks and landlords.</li><li>Async grievance-tracking microservice in Node.js that logs, tags and clusters complaints, with anonymised city-wide medians to protect worker privacy.</li></ul>",
-    role:
-      "Architected the anomaly detection service, the verification and certificate flows, and the grievance microservice.",
-    techStack: ["React", "Node.js", "FastAPI"],
-    thumbnail: dp,
-    images: [],
-    sourceCode: "https://github.com/MZeeCoder/fairgig",
   },
 ];

@@ -1,0 +1,118 @@
+---
+import { Image } from 'astro:assets';
+import { HACKATHONS } from '../../data/site';
+import SectionTitle from '../SectionTitle.astro';
+---
+
+<section id="hackathons" class="hackathons-section">
+  <div class="container">
+    <SectionTitle title="Hackathons" />
+    <ul class="hackathons">
+      {
+        HACKATHONS.map((h) => (
+          <li class="hack-item">
+            <Image class="photo" src={h.photo} alt={`${h.event} hackathon`} width={800} loading="lazy" />
+            <div>
+              <p class="track">{h.track}</p>
+              <p class="event">{h.event}</p>
+              <p class="project">Built {h.project}</p>
+              <p class="summary">{h.summary}</p>
+              <p class="tags">{h.techStack.join(' · ')}</p>
+              {h.sourceCode && (
+                <a class="link" href={h.sourceCode} target="_blank" rel="noopener noreferrer">
+                  Source code ↗
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hackathons-section {
+    padding-bottom: var(--section);
+  }
+  .hackathons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .hack-item {
+    padding-block: 32px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    gap: 24px 25px;
+  }
+  .photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .track {
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-fg);
+  }
+  .event {
+    font: 400 36px/1 var(--font-anton);
+    margin-top: 14px;
+  }
+  .project {
+    font-size: 20px;
+    line-height: 28px;
+    margin-top: 10px;
+  }
+  .summary {
+    max-width: 520px;
+    margin-top: 12px;
+    color: var(--muted-fg);
+  }
+  .tags {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--muted-fg);
+  }
+  .link {
+    display: inline-block;
+    margin-top: 16px;
+    color: var(--primary);
+  }
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 640px) {
+    .hack-item {
+      grid-template-columns: 5fr 7fr;
+      align-items: start;
+    }
+    .event {
+      font-size: 48px;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, mm } from '../../lib/motion';
+
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    gsap
+      .timeline({
+        scrollTrigger: { trigger: '#hackathons .container', start: 'top 70%', end: 'bottom bottom', scrub: 0.5 },
+      })
+      .from('#hackathons .hack-item', { y: 50, opacity: 0, stagger: 0.15 });
+
+    gsap
+      .timeline({
+        scrollTrigger: { trigger: '#hackathons .container', start: 'bottom 50%', end: 'bottom 20%', scrub: 1 },
+      })
+      .to('#hackathons .container', { y: -150, opacity: 0 });
+  });
+</script>
